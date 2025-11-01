@@ -1,4 +1,4 @@
-# Author: Liam Sherwin, 2025. MIT Licence
+# Authors: (c) Liam Sherwin, 2025. MIT Licence
 
 class_name MulticastDemo extends Control
 ## UDP Multicast device discovery demo
@@ -76,10 +76,13 @@ func _process(_p_delta: float) -> void:
 func start_node(p_address: String, p_interface: String) -> void:
 	print("Using address: ", p_address, " On interface: ", p_interface, "\n")
 	
+	## Following line are only valid when using my custom godot build with SO_REUSEADDR, and SO_REUSRPORT options exposed in the PacketPeerUDP class
+	## See README for more details
 	_tx_peer.set_reuse_address_enabled(true)
 	_rx_peer.set_reuse_address_enabled(true)
 	_tx_peer.set_reuse_port_enabled(true)
 	_rx_peer.set_reuse_port_enabled(true)
+	## -------
 	
 	var tx_error: Error = _tx_peer.bind(PORT, p_address)
 	var rx_error: Error = _rx_peer.bind(PORT, MCAST_GRP)
